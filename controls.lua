@@ -1,7 +1,7 @@
 local controls = {
 	--=== mouse ===--
-	place = 0,
-	broke = 1,
+	place = 0, --u can hold alt to switch these keys.
+	broke = 1, --u can hold alt to switch these keys.
 	
 	--=== keys ===--
 	left = "a",
@@ -19,8 +19,8 @@ local controls = {
 	debug = {
 		showConsole = 59, --default: 59 (f1)
 		showDebug = 61, --default: 61 (f3)
-		reloadState = 63, --default: 63 (f5)
-		rerenderScreen = 64, --default: 64 (f6)
+		reloadState = 63, --reloadrs the current state and all data groups defined in the config. default: 63 (f5)
+		rerenderScreen = 64, --rerenders the screen (removes graphic errors). default: 64 (f6)
 	}
 }
 

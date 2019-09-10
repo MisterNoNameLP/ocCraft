@@ -31,7 +31,7 @@ local global = {
 		loadedEntities = {},
 	},
 	textures = {},
-	blocks = {
+	blocks = { --the noBlock tag is necessary 'til the item system is implemented to avoid states["game"].init() crash.
 		name = {noBlock = true},
 		id = {noBlock = true},
 		info = {noBlock = true, amout = 0},
@@ -42,7 +42,7 @@ local global = {
 		info = {amout = 0},
 	},
 	biomes = {},
-	items = {},
+	items = {}, --not implemented yet.
 	
 	orgPrint = print,
 	

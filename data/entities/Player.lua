@@ -111,7 +111,7 @@ function Player.new(args)
 		end
 	end
 	
-	this.touch = function(this, x, y, b, p)
+	this.touch = function(this, x, y, b, p, drag)
 		local fromX = this.gameObject.posX - (this.range * (global.texturePack.size *2))
 		local fromY = this.gameObject.posY - (this.range * (global.texturePack.size))
 		local toX = this.gameObject.posX + ((this.range +1) * (global.texturePack.size *2))
@@ -143,6 +143,13 @@ function Player.new(args)
 				end
 			end
 		end
+	end
+	
+	this.drag = function(this, x, y, b, p)
+		this:touch(x, y, b, p, true)
+	end
+	
+	this.drop = function(this, x, y, b, p)
 		this.ocui:update(x, y)
 	end
 	

@@ -4,7 +4,7 @@ Grass = {}
 Grass.__index = Grass
 
 function Grass.new(args)
-	args.texture = "grass"
+	args.texture = "grass" --can be any loaded texture.
 	local this = global.Block.new(args)
 	this = setmetatable(this, Grass)
 	

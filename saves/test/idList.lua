@@ -1,1 +1,0 @@
-return {"Bedrock","WoodLog","Stone","Dirt","Wheat","Leaves","Pinkstone","Teststone","Grass"}

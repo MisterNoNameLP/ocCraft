@@ -1,6 +1,6 @@
 local conf = {
-	map = "test", --map name in "saves" dir.
-	mapBackup = false, --generate a backup anytime the map become loaded.
+	map = "world", --map name in "saves" dir.
+	mapBackup = true, --generate a backup anytime the map become loaded (can overflow the disk! (you can check how much space you have left with "df -h")).
 	texturePack = "default", --can be any installed texturePack.
 	worldGen = "flat", --can be any loaded biome.
 	
@@ -10,34 +10,39 @@ local conf = {
 	maxTickTime = .2, --if a tick need more as the maxTickTime the engine will handle the ticke like it had needs exacly the maxTickTime.
 	fpsCheckInterval = 10, --defines what amout of frames the engine use to calculate the avg. fps.
 	
-	showConsole = true, --can be changes ingame by pressing f1 by default.
-	showDebug = true, --can be changes ingame by pressing f3 by default.
-	consoleSizeY = 35,
+	showConsole = false, --can be changes ingame by pressing f1 by default.
+	showDebug = false, --can be changes ingame by pressing f3 by default.
+	consoleSizeY = 20, --the height of the console.
 	
 	debug = { --these options are for developers.
-		isDev = true, --activated debug outputs (strongly reconnement if you want to mod the game in any way or something goes wrong and you need a detailed log).
+		isDev = false, --activates debug outputs (strongly reconnement if you want to mod the game in any way or something goes wrong and you need a detailed log).
 		
 		wreDebug = false, --print worldRenderEngine debug (only if isDev).
 		wgDebug = false, --print worldGenerator debug (only if isDev).
 		dlDebug = false, --print dataLoading debug (only if isDev).
 		
-		showBlockId = true, --shows block id in inv marked with "#".
+		showBlockId = false, --shows block id in inv marked with "#".
 		drawCollider = false,
 		drawTrigger = false,
+		
+		defaultState = "loadGame",
 		
 		onReload = { --defined what data/libs are reloaded at state reload.
 			conf = true, --should be always true.
 			
-			wre = true,
+			--=== core ===--
+			wre = false,
 			wg = false,
-			map = true,
+			map = false,
 			
+			--=== data groups ===--
 			states = false,
 			textures = false,
-			blocks = true,
-			entities = false,
+			blocks = false,
+			entities = true,
 			biomes = false,
-			mods = true,
+			
+			mods = true, --just reloads the activated data groups of the mods (if only onReload.blocks = true he only also reloads the blocks from mods). should be always true.
 		},
 	}
 }

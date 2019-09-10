@@ -25,16 +25,17 @@
 		
 		wg.lua:
 			save()/load():
-				Save/load entities (after wre entity rewrite).
+				Save/load entities (after wre entity system rewrite).
 				Compress file size.
 	
 	Written by:
 		MisterNoNameLP.
 ]]
-local version = "v0.0.11.6d"
+local version = "v0.0.11.7"
 
 --===== prog start =====--
 do
+	print("Initialize ocCraft " .. version)
 	local conf = dofile("conf.lua")
 	if conf.debug.isDev then
 		print(loadfile("data/core/global.lua"))

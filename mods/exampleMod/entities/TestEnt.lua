@@ -1,3 +1,7 @@
+--[[This is a example class for an entity.
+	Currently the the game state is spawing any loaded entity once at start.
+]]
+
 local texture = "pinkstone"
 
 local global = ...
@@ -10,7 +14,7 @@ function TestEnt.init(this) --will calles when the block become loaded/reloaded.
 end
 
 function TestEnt.new(args)
-	args.sizeY = 2
+	args.sizeY = 1
 	args.texture = texture
 	local this = global.Entity.new(args)
 	this = setmetatable(this, TestEnt)

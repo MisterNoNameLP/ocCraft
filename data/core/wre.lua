@@ -225,6 +225,10 @@ function wre.addEntity(x, y, e)
 		entity = global.entities.name[e]
 	end
 	
+	if global.entities[entity].new == nil then
+		return false, "Entity not found."
+	end
+	
 	local index = #global.map.entities +1
 	global.map.entities[index] = global.entities[entity].new({posX = x, posY = y, index = index})
 	global.run(global.map.entities[index].pSpawn, global.map.entities[index], index)

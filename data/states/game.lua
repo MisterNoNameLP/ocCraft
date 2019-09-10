@@ -24,7 +24,6 @@ function game.init()
 	
 	print("[game]: Start init.")
 	
-	
 	global.load({
 		blocks = true,
 		entities = true,
@@ -38,24 +37,23 @@ function game.init()
 	
 	--=== reload player ===--
 	global.map.loadedEntities = {}
-	game.player = global.wre.addEntity(5, 2, "Player")
-	--game.testEnt = global.wre.addEntity(7, 2, "TestEnt")
+	game.player = global.wre.addEntity(2, 2, "Player")
+	
 	
 	for n, b in pairs(global.blocks) do
 		if not b.noBlock and type(b) ~= "function" then
-			--print(n, 100)
-			game.player:addToInv(n, 100)
+			game.player:addToInv(n, 1000)
 		end
 	end
 	
-	if not global.hasPlayer then
-		--global.wre.addEntity(1, 1, "Player")
-		--global.hasPlayer = true
+	local count = 4
+	for n, e in pairs(global.entities) do
+		if n ~= "Player" then
+			if global.wre.addEntity(count, 2, n) then
+				count = count +2
+			end
+		end
 	end
-	
-	
-	global.wg.load(global.conf.map, true)
-	
 	
 	--===== debug end =====--
 	
@@ -63,9 +61,10 @@ function game.init()
 end
 
 function game.start()
+	global.wg.load(global.conf.map, true)
+	global.clear()
 	global.wg.generate(global.conf.worldGen)
 	global.wre.update()
-	
 end
 
 function game.update()
@@ -96,13 +95,21 @@ function game.keyDown(c, k)
 end
 
 function game.keyUp(c, k)
-	game.player:keyUp(c, k, p)
+	global.run(game.player.keyUp, game.player, c, k, p)
 end
 
 function game.touch(x, y, b, p)
 	local posX, posY = global.getBlockPos(x, y)
 	
-	game.player:touch(x, y, b, p)
+	global.run(game.player.touch, game.player, x, y, b, p)
+end
+
+function game.drag(x, y, b, p)
+	global.run(game.player.drag, game.player, x, y, b, p)
+end
+
+function game.drop(x, y, b, p)
+	global.run(game.player.drop, game.player, x, y, b, p)
 end
 
 function game.stop()

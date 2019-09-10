@@ -1,8 +1,9 @@
 --ToDo: make it object oriented.
 
-local ocl = { version = "v1.0.5",
+local ocl = { version = "v1.1",
 	conf = {
 		logFile = "logs/occ.log",
+		backups = false,
 	},
 	
 	logFile = {},
@@ -23,8 +24,11 @@ function ocl.open(path)
 	end
 	filesystem.makeDirectory(dir)
 	
-	local file = io.open(dir .. fileName .. fileEnd, "r")
-	if file == nil then
+	local file = nil
+	if ocl.conf.backups then
+		file = io.open(dir .. fileName .. fileEnd, "r")
+	end
+	if file == nil or not ocl.conf.backups then
 		ocl.logFile = io.open(dir .. fileName .. fileEnd, "w")
 	else
 		file:close()

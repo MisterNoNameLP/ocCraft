@@ -3,16 +3,16 @@ local global = ...
 
 --===== Variables =====--
 local orgPrint = print
-local lastState = global.state
+local lastState = ""
 local frameCount = 0
 local lastFPSCheck = 0
 
 --===== Functions =====--
---[[
+
 local function print(...)
 	global.log(...)
 end
-]]
+
 local function run(func, ...)
 	if func ~= nil then
 		local suc, err = xpcall(func, debug.traceback, ...)
@@ -30,15 +30,16 @@ local function updateState()
 		global.tbConsole:draw()
 		global.isRunning = false
 	else
-		if global.state ~= lastState then
+		while global.state ~= lastState do
 			if lastState ~= "" then
 				run(global.states[lastState].stop)
 			end
+			lastState = global.state
 			if not global.states[global.state].isInitialized then
 				run(global.states[global.state].init)
+				global.states[global.state].isInitialized = true
 			end
 			run(global.states[global.state].start)
-			lastState = global.state
 		end
 		if global.states[global.state].update ~= nil then --manual check to avoid log spamming on missing update func.
 			run(global.states[global.state].update)
@@ -51,10 +52,12 @@ local function start()
 	global.term.clear()
 	
 	if global.isDev then
-		global.state = "game"
+		--global.state = "game"
+		global.state = global.conf.debug.defaultState
 	else
-		global.state = "game"
-		--global.state = "mainMenu"
+		--global.state = "game"
+		--global.state = "loadGame"
+		global.state = global.conf.debug.defaultState
 	end
 	
 	global.lastUptime = global.computer.uptime()
@@ -96,6 +99,14 @@ end
 local function touch(_, _, x, y, b, p)
 	global.ocui:update(x, y)
 	run(global.states[global.state].touch, x, y, b, p)
+end
+
+local function drag(_, _, x, y, b, p)
+	run(global.states[global.state].drag, x, y, b, p)
+end
+
+local function drop(_, _, x, y, b, p)
+	run(global.states[global.state].drop, x, y, b, p)
 end
 
 local function keyDown(_, _, c, k, p)
@@ -149,6 +160,8 @@ end
 
 local function progamEnd()
 	global.event.ignore("touch", touch)
+	global.event.ignore("drag", drag)
+	global.event.ignore("drop", drop)
 	global.event.ignore("key_down", keyDown)
 	global.event.ignore("key_up", keyUp)
 	
@@ -162,6 +175,8 @@ end
 
 --===== global.event listening =====--
 global.event.listen("touch", touch)
+global.event.listen("drop", drop)
+global.event.listen("drag", drag)
 global.event.listen("key_down", keyDown)
 global.event.listen("key_up", keyUp)
 
