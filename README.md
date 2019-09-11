@@ -1,5 +1,5 @@
 # ocCraft
-This is a little project originated in trough a very little OpenComputers game jam.
+This is a little videogame originated trough a very little OpenComputers game jam.
 It is currently not much more as the engine but should be easy to modify as long as you have a little practice with lua.
 
 # Modding
