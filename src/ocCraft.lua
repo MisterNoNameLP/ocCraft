@@ -1,4 +1,6 @@
 --[[ocCraft:
+	TT
+	
 	ToDo:
 		Add items:
 			Basic item class.
@@ -31,7 +33,7 @@
 	Written by:
 		MisterNoNameLP.
 ]]
-local version = "v0.0.11.7"
+local version = "v0.0.11.7d"
 
 --===== prog start =====--
 do
