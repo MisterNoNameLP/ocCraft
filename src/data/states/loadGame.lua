@@ -59,7 +59,7 @@ function loadGame.start()
 	global.states["game"].init()
 	global.states["game"].isInitialized = true
 	
-	--global.state = "game"
+	global.state = "game"
 end
 
 function loadGame.update()
