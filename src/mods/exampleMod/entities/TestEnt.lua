@@ -15,7 +15,7 @@ end
 
 function TestEnt.new(args)
 	args.sizeY = 1
-	args.texture = texture
+	--args.texture = texture
 	local this = global.Entity.new(args)
 	this = setmetatable(this, TestEnt)
 	

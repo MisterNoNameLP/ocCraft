@@ -4,7 +4,7 @@ local t = {
 	version = "v0.1",
 	
 	drawCalls = {
-		{"b", 0xbbbb33},
+		{"b", 0xccaa33},
 		{"f", 0x777711},
 		{0, 0, 6, 3, "#"},
 		{0, 0, "|####|"},

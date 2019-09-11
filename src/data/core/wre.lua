@@ -283,6 +283,7 @@ end
 function wre.update(phx)
 	fromX, toX, fromY, toY = global.getFOV()
 	fromPixelX, toPixelX, fromPixelY, toPixelY = global.getFOVPixel()
+	
 	--fromPixelX, toPixelX, fromPixelY, toPixelY = 0, global.resX, 0, global.resY
 	--global.log(global.getFOVPixel())
 	

@@ -17,7 +17,9 @@ function Entity.new(args)
 	this.sizeX = ((args.sizeX or 1) * (global.texturePack.size *2))
 	this.sizeY = (args.sizeY or 1) * global.texturePack.size
 	
-	if type(args.texture) == "string" then
+	if args.texture == nil then
+		args.texture = global.ocgl.generateTexture({})
+	elseif type(args.texture) == "string" then
 		args.texture = global.textures[args.texture]
 	end
 	this.texture = args.texture 
@@ -60,6 +62,7 @@ function Entity.new(args)
 		end
 		if tmpTexture ~= nil then
 			for _, s in pairs(this.gameObject:getSprites()) do
+				s:clear(global.backgroundColor)
 				s:changeTexture(tmpTexture)
 			end
 		end
@@ -71,7 +74,7 @@ function Entity.new(args)
 		this.gameObject:moveTo(x, y)
 	end
 	this.addForce = function(this, x, y, maxSpeed)
-		this.gameObject:addForce(x, y, maxSpeed)
+		this.gameObject:addForce(x * (global.texturePack.size *2), y * global.texturePack.size, maxSpeed)
 	end
 	this.setSpeed = function(this, x, y)
 		this.gameObject:setSpeed(x, y)

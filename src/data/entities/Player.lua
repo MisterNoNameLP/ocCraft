@@ -21,7 +21,7 @@ function Player.new(args)
 	this.isCreative = false
 	this.range = 1000
 	this.acceleraion = 20
-	this.maxSpeed = 30 --bug: cant be more than the texturepack size (ocgf rigidbody)
+	this.maxSpeed = 30 --bug: shouldn't be more than the texturepack size (ocgf rigidbody)
 	this.jumpForce = 1
 	this.breakDamage = 1
 	
@@ -37,21 +37,21 @@ function Player.new(args)
 	}) --ToDo: trigger y size texturepack bla.
 	
 	this.update = function(this) 
-		this.gameObject:spriteStop(nil, true)
+		this.gameObject:stopAnimation(nil, true)
 		if global.keyboard.isKeyDown(global.controls.left) then
-			this:addForce(- (this.acceleraion * global.texturePack.size), 0, this.maxSpeed)
-			this.gameObject:spritePlay(-1)
+			this:addForce(- this.acceleraion, 0, this.maxSpeed)
+			this.gameObject:playAnimation(-1)
 			this:turn(true)
 		end
 		if global.keyboard.isKeyDown(global.controls.right) then
-			this:addForce(this.acceleraion * global.texturePack.size, 0, this.maxSpeed)
-			this.gameObject:spritePlay()
+			this:addForce(this.acceleraion, 0, this.maxSpeed)
+			this.gameObject:playAnimation()
 			this:turn(false)
 		end
 		
 		if global.keyboard.isKeyDown(global.controls.jump) then
 			if this.isJumping == false then
-				this:addForce(0, - (this.jumpForce * global.texturePack.size))
+				this:addForce(0, - this.jumpForce)
 				this.isJumping = true
 			end
 			

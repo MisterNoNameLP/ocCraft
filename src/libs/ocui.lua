@@ -4,7 +4,7 @@ OCUI.__index = OCUI
 --[[ToDo:
 	add color check arg on draw calls.
 	rework the initialisation routines (better args etc.).
-	rename it.
+	add dynamic ui generation (no texture).
 ]]--
 
 function OCUI.initiate(ocgl, onError)

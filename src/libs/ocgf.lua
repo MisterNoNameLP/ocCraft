@@ -5,7 +5,7 @@
 		MisterNoNameLP
 ]]
 
-local OCGF = {version = "v0.9.1"} 
+local OCGF = {version = "v0.9.2"} 
 OCGF.__index = OCGF
 
 --===== local vars =====--
@@ -308,25 +308,25 @@ function OCGF.GameObject.clear(this, color, actual)
 	end
 end
 
-function OCGF.GameObject.spriteStart(this, speed, frame)
+function OCGF.GameObject.startAnimation(this, speed, frame)
 	for _, s in pairs(this.sprites) do
 		s:start(speed, frame)
 	end
 end
 
-function OCGF.GameObject.spriteStop(this, frame, playTilEnd)
+function OCGF.GameObject.stopAnimation(this, frame, playTilEnd)
 	for _, s in pairs(this.sprites) do
 		s:stop(frame, playTilEnd)
 	end
 end
 
-function OCGF.GameObject.spritePause(this)
+function OCGF.GameObject.pauseAnimation(this)
 	for _, s in pairs(this.sprites) do
 		s:pause()
 	end
-end
 
-function OCGF.GameObject.spritePlay(this, speed, frame)
+end
+function OCGF.GameObject.playAnimation(this, speed, frame)
 	for _, s in pairs(this.sprites) do
 		s:play(speed, frame)
 	end

@@ -23,6 +23,9 @@ local global = {
 	
 	backgroundColor = 0x00409f,
 	
+	resX = 0,
+	resY = 0,
+	
 	map = {
 		idMap = {},
 		blocks = {}, --2D
@@ -140,7 +143,7 @@ function global.clear()
 	global.wre.newDraw()
 end
 
-function global.loadData(target, dir, func, print)
+function global.loadData(target, dir, func, print, overwrite)
 	local id = 1
 	if target.info ~= nil and target.info.amout ~= nil then
 		id = target.info.amout +1
@@ -150,26 +153,37 @@ function global.loadData(target, dir, func, print)
 	print = print or global.orgPrint
 	
 	for file in global.fs.list(path) do
+		local name = string.sub(file, 0, #file -4)
+		
 		if global.isDev then
-			local debugString = "[global]: Loading file: " .. dir .. "/" .. file .. ": "
-			
-			local suc, err = loadfile(path .. file)
-			
-			if suc == nil then
-				print(debugString .. tostring(err))
+			if target[name] == nil or overwrite then
+				local debugString = ""
+				if target[name] == nil then
+					debugString = "[global]: Loading file: " .. dir .. "/" .. file .. ": "
+				else
+					debugString = "[global]: Loading (overwrite) file: " .. dir .. "/" .. file .. ": "
+				end
+				
+				local suc, err = loadfile(path .. file)
+				if suc == nil then
+					print(debugString .. tostring(err))
+				else
+					print(debugString .. tostring(suc))
+				end
 			else
-				print(debugString .. tostring(suc))
+			
 			end
 		end
 		
-		local name = string.sub(file, 0, #file -4)
-		target[name] = loadfile(path .. file)(global)
-		
-		if func ~= nil then
-			func(name, id)
+		if target[name] == nil or overwrite then
+			target[name] = loadfile(path .. file)(global)
+			
+			if func ~= nil then
+				func(name, id)
+			end
+			
+			id = id +1
 		end
-		
-		id = id +1
 	end
 	return id
 end
@@ -186,11 +200,10 @@ function global.moveCamera(x, y)
 end
 
 function global.setConsoleSize(size)
-	local resX, resY = global.gpu.getResolution()
 	size = size or global.conf.consoleSizeY
-	global.tbConsole.sizeX = resX
-	global.tbConsole.sizeY = resY - (resY - size)
-	global.tbConsole.posY = resY - size
+	global.tbConsole.sizeX = global.resX
+	global.tbConsole.sizeY = global.resY - (global.resY - size)
+	global.tbConsole.posY = global.resY - size
 end
 
 function global.getFOVPixel() --gives the FOV in pixels.

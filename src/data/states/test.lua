@@ -11,8 +11,15 @@ local test = {
 
 --===== shared functions =====--
 function test.start()
-	--test.block = global.blocks["Grass"].new({posX = 1, posY = 1})
-	--test.block = global.Block.new({posX = 1, posY = 1})
+	local thread = require("thread")
+	
+	local t = thread.create(function()
+		while true do
+			global.orgPrint(global.resX)
+			os.sleep(.5)
+		end
+	end)
+	--t:detach()
 end
 
 function test.update()
@@ -20,7 +27,7 @@ function test.update()
 end
 
 function test.draw()
-	test.block:draw()
+	--test.block:draw()
 	--global.log(test.block.draw)
 end
 

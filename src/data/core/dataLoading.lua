@@ -96,7 +96,7 @@ if toLoad.textures then
 			global.loadData(global.textures, "texturePacks/" .. global.conf.texturePack .. "/textures", nil, print)
 		else
 			print("[DL]: Loading textures.")
-			global.loadData(global.textures, path .. "/textures", nil, print)
+			global.loadData(global.textures, path .. "/textures", nil, print, global.conf.preferModTextures)
 		end
 		global.alreadyLoaded[path].textures = true
 	else

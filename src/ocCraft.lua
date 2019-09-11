@@ -1,5 +1,18 @@
 --[[ocCraft:
-	TT
+	Bugs:
+		Unconstant jump height (jump glitch):
+			Higher FPS higher jump glitch effect (trigger more then 1 frame tiggerd)(add collision side return to ocgf.updatePhx()).
+			
+		Memory leak on game restart/stop.
+		
+		Resolution bug:
+			You need to restart the PC after you changed the resolution to avoid graphic issues (only if occ was running befor the res change).
+			Block placing/breaking are working (not properly) but no rendering (ent and blocks).
+		
+		Entities:
+			Speed shouldn't be more as the texturePack size (ocgf.RigidBody).
+			Graphc errors if sprite was over a block.
+			Despawns sometimes if it goes out of screen (will fixed after wre.updateEntities() rewrite).
 	
 	ToDo:
 		Add items:
@@ -33,7 +46,7 @@
 	Written by:
 		MisterNoNameLP.
 ]]
-local version = "v0.0.11.7d"
+local version = "v0.1"
 
 --===== prog start =====--
 do
@@ -57,6 +70,7 @@ do
 		end
 		local success, returnValues = core(global)
 		core = nil
+		
 		global = nil
 		return success, returnValues
 	else

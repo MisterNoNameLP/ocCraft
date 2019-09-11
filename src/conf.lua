@@ -14,6 +14,8 @@ local conf = {
 	showDebug = false, --can be changes ingame by pressing f3 by default.
 	consoleSizeY = 20, --the height of the console.
 	
+	preferModTextures = true, --if true mods can overwrite texturePack textures.
+	
 	debug = { --these options are for developers.
 		isDev = false, --activates debug outputs (strongly reconnement if you want to mod the game in any way or something goes wrong and you need a detailed log).
 		
@@ -31,7 +33,7 @@ local conf = {
 			conf = true, --should be always true.
 			
 			--=== core ===--
-			wre = false,
+			wre = false, --should be true if you want to reload blocks.
 			wg = false,
 			map = false,
 			
@@ -39,7 +41,7 @@ local conf = {
 			states = false,
 			textures = false,
 			blocks = false,
-			entities = true,
+			entities = false,
 			biomes = false,
 			
 			mods = true, --just reloads the activated data groups of the mods (if only onReload.blocks = true he only also reloads the blocks from mods). should be always true.
