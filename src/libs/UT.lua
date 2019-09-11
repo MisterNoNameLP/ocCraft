@@ -1,8 +1,25 @@
+--[[
+    UT Copyright (C) 2019 MisterNoNameLP.
+	
+    This library is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this library.  If not, see <https://www.gnu.org/licenses/>.
+]]
+
 --[[UsefullThings libary
 	Written by:
 		MisterNoNameLP
 ]]
-local UT = {version = "v0.6"}
+local UT = {version = "v0.6.1"}
 
 function UT.parseArgs(...) --returns the first non nil value.
 	for _, a in pairs({...}) do
@@ -13,6 +30,10 @@ function UT.parseArgs(...) --returns the first non nil value.
 end
 
 function UT.seperatePath(path) --seperates a data path ["./DIR/FILE.ENDING"] into the dir path ["./DIR/"], the file name ["FILE"], and the file ending [".ENDING" or nil]
+	if string.sub(path, #path) == "/" then
+		return path
+	end
+	
 	local dir, fileName, fileEnd = "", "", nil
 	local tmpLatest = ""
 	for s in string.gmatch(tostring(path), "[^/]+") do

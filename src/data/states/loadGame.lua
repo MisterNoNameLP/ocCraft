@@ -1,3 +1,22 @@
+--[[
+	ocCraft Copyright (C) 2019 MisterNoNameLP.
+	
+    This file is part of ocCraft.
+
+    ocCraft is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ocCraft is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with ocCraft.  If not, see <https://www.gnu.org/licenses/>.
+]]
+
 local global = ...
 
 --===== shared vars =====--
@@ -22,13 +41,25 @@ function loadGame.start()
 	local s1 = "ocCraft " .. global.version
 	local s2 = "Loading..."
 	
-	global.gpu.set((global.resX /2) - (#s1 /2), (global.resY /2) -1, s1)
-	global.gpu.set((global.resX /2) - (#s2 /2), global.resY /2, s2)
+	local noticeLines = 0
+	for s in string.gmatch(tostring(global.license.notice), "[^\r\n]+") do
+		noticeLines = noticeLines +1
+	end
+	
+	global.gpu.set((global.resX /2) - (#s1 /2), (global.resY /2) -1 - (noticeLines /2), s1)
+	global.gpu.set((global.resX /2) - (#s2 /2), global.resY /2  - (noticeLines /2), s2)
+	
+	local count = 3
+	for s in string.gmatch(tostring(global.license.notice), "[^\r\n]+") do
+		global.gpu.set((global.resX /2) - (#s /2), (global.resY /2) + count - (noticeLines /2), s)
+		global.log(s)
+		count = count +1
+	end
 	
 	global.states["game"].init()
 	global.states["game"].isInitialized = true
 	
-	global.state = "game"
+	--global.state = "game"
 end
 
 function loadGame.update()
