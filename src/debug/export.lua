@@ -19,7 +19,7 @@ local licenseNotice = [[
 	Written by:
 		MisterNoNameLP.
 ]]
-local version = "v1.0.4"
+local version = "v1.0.5"
 
 local installScript = [[
 --===== local functions =====--
@@ -183,7 +183,7 @@ if opts.e then
 	
 	if io.open(args[2], "r") == nil or opts.o then
 		exportFile = io.open(args[2], "w")
-		write(exportFile, "local licenseNotice = [[This installation script is createt by MisterNoNameLPs OC project exporter " .. version .. " <https://github.com/MisterNoNameLP/ocCraft/blob/master/src/debug/export.lua>.\n")
+		write(exportFile, "local licenseNotice = [[This installation script is createt by MisterNoNameLPs OC project exporter " .. version .. "\n<https://github.com/MisterNoNameLP/ocCraft/blob/master/src/debug/export.lua>.\n")
 		
 		write(exportFile, "\nThis installer DO NOT give ANY WARRANTY for stored/installed data.\n")
 		write(exportFile, "All stored/installed data are third party content i am not responsible for. \n")
