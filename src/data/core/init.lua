@@ -54,8 +54,6 @@ global.wg = loadfile("data/core/wg.lua")(global)
 --print(loadfile("data/core/wre.lua"))
 global.wre = loadfile("data/core/wre.lua")(global)
 
-global.license = dofile("data/core/license.lua")
-
 global.resX, global.resY = global.gpu.getResolution()
 
 --=== debug ===--

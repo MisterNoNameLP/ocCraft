@@ -42,7 +42,7 @@ function loadGame.start()
 	local s2 = "Loading..."
 	
 	local noticeLines = 0
-	for s in string.gmatch(tostring(global.license.notice), "[^\r\n]+") do
+	for s in string.gmatch(tostring(global.licenseNotice), "[^\r\n]+") do
 		noticeLines = noticeLines +1
 	end
 	
@@ -50,7 +50,7 @@ function loadGame.start()
 	global.gpu.set((global.resX /2) - (#s2 /2), global.resY /2  - (noticeLines /2), s2)
 	
 	local count = 3
-	for s in string.gmatch(tostring(global.license.notice), "[^\r\n]+") do
+	for s in string.gmatch(tostring(global.licenseNotice), "[^\r\n]+") do
 		global.gpu.set((global.resX /2) - (#s /2), (global.resY /2) + count - (noticeLines /2), s)
 		global.log(s)
 		count = count +1
