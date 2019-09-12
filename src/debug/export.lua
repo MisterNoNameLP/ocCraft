@@ -1,8 +1,25 @@
+local licenseNotice = [[
+	export Copyright (C) 2019 MisterNoNameLP.
+	
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]
+
 --[[A very simple project exporter.
 	Written by:
 		MisterNoNameLP.
 ]]
-local version = "v1.0.3"
+local version = "v1.0.4"
 
 local installScript = [[
 --===== local functions =====--
@@ -49,6 +66,8 @@ if opts.h or #args == 0 then
 	return true
 end
 
+print(licenseNotice)
+
 if not opts.o then
 	if string.sub(args[1], 0, 1) == "/" and fs.exists(args[1]) then
 		return false, "Folder exists already."
@@ -92,6 +111,14 @@ local linesOfCode = 0
 local exportFile = nil
 local relativePath = ""
 
+local function write(file, s, emptyBufferSpace)
+	emptyBufferSpace = emptyBufferSpace or 10
+	for c = 1, #s, (file.bufferSize - emptyBufferSpace) +1 do
+		file:write(string.sub(s, c, c + file.bufferSize - emptyBufferSpace))
+		file:flush()
+	end
+end
+
 local function parseFiles(path, countLines, export)
 	if string.sub(path, 0, 1) ~= "/"  then
 		path = path or ""
@@ -104,8 +131,7 @@ local function parseFiles(path, countLines, export)
 			parseFiles(path .. file, countLines, export)
 			dirs = dirs +1
 			if export then
-				exportFile:write("[\"" .. string.sub(path .. file, #relativePath + #args[1] +1) .. "\"] = 0,")
-				exportFile:flush()
+				write(exportFile, "[\"" .. string.sub(path .. file, #relativePath + #args[1] +1) .. "\"] = 0,")
 			end
 		else
 			local tmpPath = "/" .. path .. file
@@ -114,17 +140,11 @@ local function parseFiles(path, countLines, export)
 				
 				local emptyBufferSpace = #tmpPath +20
 				local f = io.open(tmpPath, "r")
-				local s = serialization.serialize(f:read("*all"))
+				local ss = serialization.serialize(f:read("*all"))
 				f:close()
 				
-				exportFile:write("[\"" .. string.sub(path .. file, #relativePath + #args[1] +1) .. "\"] = ")
-				exportFile:flush()
-				
-				for c = 1, #s, (exportFile.bufferSize - emptyBufferSpace) +1 do
-					exportFile:write(string.sub(s, c, c + exportFile.bufferSize - emptyBufferSpace))
-					exportFile:flush()
-				end
-				
+				write(exportFile, "[\"" .. string.sub(path .. file, #relativePath + #args[1] +1) .. "\"] = ", emptyBufferSpace)
+				write(exportFile, ss, emptyBufferSpace)
 				exportFile:write(",")
 			end
 			
@@ -163,9 +183,14 @@ if opts.e then
 	
 	if io.open(args[2], "r") == nil or opts.o then
 		exportFile = io.open(args[2], "w")
-		exportFile:write("-- This is a installation script createt by MisterNoNameLPs OC project exporter " .. version .. ".\n\n")
-		exportFile:write("local data = {")
-		exportFile:flush()
+		write(exportFile, "local licenseNotice = [[This installation script is createt by MisterNoNameLPs OC project exporter " .. version .. " <https://github.com/MisterNoNameLP/ocCraft/blob/master/src/debug/export.lua>.\n")
+		
+		write(exportFile, "\nThis installer DO NOT give ANY WARRANTY for stored/installed data.\n")
+		write(exportFile, "All stored/installed data are third party content i am not responsible for. \n")
+		
+		write(exportFile, "\n" .. licenseNotice .. "]]\n")
+		
+		write(exportFile, "local data = {")
 	else
 		return false, "File are existing already."
 	end
@@ -175,13 +200,8 @@ parseFiles(args[1], opts.i, opts.e)
 
 if opts.e then
 	exportFile:write("} \n")
-	exportFile:flush()
 	
-	local emptyBufferSpace = 10
-	for c = 1, #installScript, (exportFile.bufferSize - emptyBufferSpace) +1 do
-		exportFile:write(string.sub(installScript, c, c + exportFile.bufferSize - emptyBufferSpace))
-		exportFile:flush()
-	end
+	write(exportFile, installScript, 10)
 	
 	exportFile:close()
 end
