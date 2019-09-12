@@ -9,7 +9,7 @@ You can install/create your own texture packs (also with different resolution) a
 
 # Installation
 To play the game you need Minecraft with forge and the OpenComputers mod installed.
-On the OC PC you just need to download and run the setup file (https://pastebin.com/L1dfbL6p).
+On the OC PC you just need to download and run the setup file (https://pastebin.com/7h1xNZgt).
 
 
 I hope you like the project and have a little bit fun :>
